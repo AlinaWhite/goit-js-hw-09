@@ -30,11 +30,17 @@ const saveInfoMessege = event => {
 
 const submitForm = event => {
   event.preventDefault();
-  event.target.reset();
-  localStorage.removeItem('feedback-form-state');
-
+  const message = form.elements.message.value;
+  const email = form.elements.email.value;
+  if ( message === '' && email === '') {
+    alert('Fill please all fields');}
+  else { 
+    event.target.reset();
+    localStorage.removeItem('feedback-form-state');
+    console.log(formData);
+  };
 };
 
 
-form.addEventListener('change', saveInfoMessege);
+form.addEventListener('input', saveInfoMessege);
 form.addEventListener('submit', submitForm);
