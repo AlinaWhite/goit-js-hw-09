@@ -22,8 +22,8 @@ let savedfeedback = () => {
 savedfeedback();
 
 const saveInfoMessege = event => {
-  const formName = event.target.name;
-  const formValue = event.target.value;
+  const formName = event.target.name.trim();
+  const formValue = event.target.value.trim();
   formData[formName] = formValue;
   localStorage.setItem('feedback-form-state', JSON.stringify(formData));
 }; 
@@ -32,7 +32,7 @@ const submitForm = event => {
   event.preventDefault();
   const message = form.elements.message.value;
   const email = form.elements.email.value;
-  if ( message === '' && email === '') {
+  if ( message === '' || email === '') {
     alert('Fill please all fields');}
   else { 
     event.target.reset();
