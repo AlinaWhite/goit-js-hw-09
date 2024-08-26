@@ -1,43 +1,30 @@
 const form = document.querySelector('.feedback-form');
-const formData = {};
+let formData = JSON.parse(localStorage.getItem('feedback-form-state')) || {};
+const {email, message} = form.elements;
 
-let savedfeedback = () => {
-  const formDateFromLS = JSON.parse(localStorage.getItem('feedback-form-state'));
+const savedfeedback = () => {
+  email.value = formData.email || '';
+  message.value = formData.message || '';
 
-  if (formDateFromLS === null) {
-    return;
-  }
-
-  formData = formDateFromLS;
-
-  console.log(formDateFromLS);
-
-  for (const key in formDateFromLS) {
-    if(formDateFromLS.hasOwnProperty(key)) {
-      form.elements[key].value = formDateFromLS[key];
-    }
-  }
 };
 
 savedfeedback();
 
 const saveInfoMessege = event => {
-  const formName = event.target.name.trim();
-  const formValue = event.target.value.trim();
-  formData[formName] = formValue;
+  formData[event.target.name] = event.target.value.trim();;
   localStorage.setItem('feedback-form-state', JSON.stringify(formData));
 }; 
 
 const submitForm = event => {
   event.preventDefault();
-  const message = form.elements.message.value;
-  const email = form.elements.email.value;
-  if ( message === '' || email === '') {
+  
+  if ( message.value.trim() === '' || email.value.trim() === '') {
     alert('Fill please all fields');}
   else { 
     event.target.reset();
     localStorage.removeItem('feedback-form-state');
     console.log(formData);
+    formData = {};
   };
 };
 
